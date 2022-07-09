@@ -1,23 +1,16 @@
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import { useDispatch } from "react-redux";
+import { login } from "../../store/slices/usuarioEnSesion.slice";
+
 const Login = () => {
   const { handleSubmit, register } = useForm();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const ingresar = (data) => {
-    axios
-      .post("http://localhost:8090/api/v1/usuarios/login/", data)
-      .then((res) => {
-        localStorage.setItem("token", res.data.access);
-        navigate("/");
-        alert("Sesion iniciada correctamente");
-      })
-      .catch((error) => {
-        console.log(error.response.status);
-        if (error.response.status === 401) {
-          alert("Credenciales incorrectas");
-        }
-      });
+    dispatch(login(data));
+    navigate("/");
   };
 
   return (
