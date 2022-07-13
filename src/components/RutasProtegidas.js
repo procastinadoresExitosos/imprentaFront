@@ -1,13 +1,14 @@
-import {Outlet, Navigate} from 'react-router-dom'
+import { Outlet } from "react-router-dom";
+import { NotFoundError } from "./errores/NotFoundError";
 
 const RutasProtegidas = () => {
-    const token = localStorage.getItem('token')
+  const admin = JSON.parse(localStorage.getItem("usuario"));
 
-    if(token){
-        return <Outlet />
-    } else {
-        return <Navigate to="/login" />
-    }
-}
+  if (admin && admin.usuario.rolId === 1) {
+    return <Outlet />;
+  } else {
+    return <NotFoundError />;
+  }
+};
 
 export default RutasProtegidas;

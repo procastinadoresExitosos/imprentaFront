@@ -3,8 +3,11 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./pages/login/Login";
 import RutasProtegidas from "./components/RutasProtegidas";
 import Home from "./pages/home/Home";
-import FormUsuarios from "./components/formUsuarios/FormUsuarios";
 import BarraNavegacion from "./components/barraNavegacion/BarraNavegacion";
+import { NotFoundError } from "./components/errores/NotFoundError";
+import FormUsuarios from "./components/usuarios/formUsuarios/FormUsuarios";
+import { Dashboard } from "./pages/dashboard/Dashboard";
+import { ModuloUsuraios } from "./pages/dashboard/ModuloUsuraios";
 
 function App() {
   return (
@@ -14,9 +17,13 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/registrar" element={<FormUsuarios />} />
           <Route element={<RutasProtegidas />}>
-            <Route path="/usuarios" element={<FormUsuarios />} />
+            <Route path="dashboard" element={<Dashboard />}>
+              <Route path="usuarios" element={<ModuloUsuraios />} />
+            </Route>
           </Route>
+          <Route path="*" element={<NotFoundError />} />
         </Routes>
       </div>
     </BrowserRouter>

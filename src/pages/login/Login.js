@@ -1,7 +1,8 @@
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { login } from "../../store/slices/usuarioEnSesion.slice";
+import { Errores } from "../../components/errores/Errores";
 
 const Login = () => {
   const { handleSubmit, register } = useForm();
@@ -10,27 +11,35 @@ const Login = () => {
 
   const ingresar = (data) => {
     dispatch(login(data));
-    navigate("/");
+    if (localStorage.getItem("usuario")) {
+      navigate("/");
+    }
   };
 
   return (
     <>
-      <h1>Bienvenido</h1>
+      <h3>Bienvenido</h3>
       <form onSubmit={handleSubmit(ingresar)}>
-        <input
-          type="text"
-          name="usuario"
-          placeholder="email"
-          {...register("email")}
-        />
-        <input
-          type="password"
-          name="contrasena"
-          placeholder="Contraseña"
-          {...register("contrasena")}
-        />
-        <button>Login</button>
+        <div>
+          <input
+            type="text"
+            name="usuario"
+            placeholder="email"
+            {...register("email")}
+          />
+        </div>
+        <div>
+          <input
+            type="password"
+            name="contrasena"
+            placeholder="Contraseña"
+            {...register("contrasena")}
+          />
+        </div>
+        <button>Login</button> <br />
+        <Link to="/registrar">Registrate</Link>
       </form>
+      <Errores />
     </>
   );
 };

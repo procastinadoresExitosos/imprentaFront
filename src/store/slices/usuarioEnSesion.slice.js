@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import { setError } from "./errores.slice";
 
 export const usuarioEnSesionSlice = createSlice({
   name: "usuarioEnSesion",
@@ -8,23 +9,29 @@ export const usuarioEnSesionSlice = createSlice({
     sessionUser: (state, action) => {
       return action.payload;
     },
+    cerrarSesion: (state, action) => {
+      window.localStorage.removeItem("usuario");
+      return null;
+    },
   },
 });
 
-export const { sessionUser } = usuarioEnSesionSlice.actions;
+export const { sessionUser, cerrarSesion } = usuarioEnSesionSlice.actions;
 
 export const login = (data) => (dispatch) => {
   axios
-    .post("http://localhost:8090/api/v1/usuarios/login/", data)
+    .post(
+      "https://imprenta-usuarios.herokuapp.com/api/v1/usuarios/login/",
+      data
+    )
     .then((res) => {
+      console.log(res);
       window.localStorage.setItem("usuario", JSON.stringify(res.data));
       dispatch(sessionUser(res.data));
     })
-    .catch((error) => {
-      console.log(error.response.status);
-      if (error.response.status === 401) {
-        alert("Credenciales incorrectas");
-      }
+    .catch((err) => {
+      const error = { status: err.response.status, error: err.response.data };
+      dispatch(setError(error));
     });
 };
 

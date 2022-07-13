@@ -15,7 +15,7 @@ export const { setRoles } = rolesSlice.actions;
 
 export const getRoles = () => (dispatch) => {
   return axios
-    .get("http://localhost:8090/api/v1/roles/")
+    .get("https://imprenta-usuarios.herokuapp.com/api/v1/roles/")
     .then((res) => dispatch(setRoles(res.data)));
 };
 
