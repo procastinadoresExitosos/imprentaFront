@@ -1,47 +1,58 @@
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../store/slices/usuarioEnSesion.slice";
-import { Errores } from "../../components/errores/Errores";
+import "./login.css";
 
 const Login = () => {
   const { handleSubmit, register } = useForm();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
+  const errores = useSelector((state) => state.errores);
+  console.log(errores);
   const ingresar = (data) => {
     dispatch(login(data));
-    if (localStorage.getItem("usuario")) {
-      navigate("/");
-    }
+    errores && navigate("/");
   };
 
   return (
     <>
-      <h3>Bienvenido</h3>
-      <form onSubmit={handleSubmit(ingresar)}>
-        <label htmlFor="usuario">Usuario</label>
-        <div>
-          <input
-            type="text"
-            name="usuario"
-            placeholder="email"
-            {...register("email")}
-          />
-        </div>
-        <div>
-          <label htmlFor="contrasena">Contraseña</label> <br />
-          <input
-            type="password"
-            name="contrasena"
-            placeholder="Contraseña"
-            {...register("contrasena")}
-          />
-        </div>
-        <button>Login</button> <br />
-        <Link to="/registrar">Registrate</Link>
-      </form>
-      <Errores />
+      <div className="container mt-5 login">
+        <h3 className="text-light">Bienvenido</h3>
+        <form onSubmit={handleSubmit(ingresar)}>
+          <div className="mb-3">
+            <label className="text-light" htmlFor="usuario">
+              Usuario
+            </label>{" "}
+            <br />
+            <input
+              type="text"
+              name="usuario"
+              placeholder="email"
+              {...register("email")}
+            />
+          </div>
+          <div>
+            <label className="text-light" htmlFor="contrasena">
+              Contraseña
+            </label>{" "}
+            <br />
+            <input
+              type="password"
+              name="contrasena"
+              placeholder="Contraseña"
+              {...register("contrasena")}
+            />
+          </div>
+          <div className="mt-4">
+            <button className="btn btn-outline-success">Login</button>
+            <Link className="btn btn-outline-light" to="/registrar">
+              Registrate
+            </Link>
+          </div>
+        </form>
+        {errores && <div className="link-danger">{errores.error.message}</div>}
+      </div>
     </>
   );
 };

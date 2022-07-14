@@ -4,10 +4,9 @@ import ListaUsuarios from "../../components/usuarios/listaUsuarios/ListaUsuarios
 
 export const ModuloUsuraios = () => {
   return (
-    <>
-      <h1>Usuarios</h1>
+    <div className="container-sm">
       <FormUsuarios />
       <ListaUsuarios />
-    </>
+    </div>
   );
 };

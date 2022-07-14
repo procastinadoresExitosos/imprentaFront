@@ -17,7 +17,7 @@ function App() {
       {loader && (
         <div className="overlay">
           <div className="loadingio-eclipse">
-            <div class="ldio-rpinwye8j0b">
+            <div className="ldio-rpinwye8j0b">
               <div></div>
             </div>
           </div>

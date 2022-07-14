@@ -2,7 +2,6 @@ import { useSelector } from "react-redux";
 
 const Home = () => {
   const usuarioEnSesion = useSelector((state) => state.usuarioEnSesion);
-  console.log(usuarioEnSesion);
   return (
     <>
       <h1>Home</h1>
