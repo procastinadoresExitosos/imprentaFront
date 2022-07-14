@@ -7,9 +7,6 @@ export const selecActualizar = createSlice({
     seleccionar: (state, action) => {
       return action.payload;
     },
-    // deseleccionar: () => {
-    //   return null;
-    // },
   },
 });
 

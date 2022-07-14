@@ -1,6 +1,9 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getUsuarios } from "../../../store/slices/usuarios.slices";
+import {
+  eliminarUsuarios,
+  getUsuarios,
+} from "../../../store/slices/usuarios.slices";
 import { seleccionar } from "../../../store/slices/selecActualizar.slice";
 
 const ListaUsuarios = () => {
@@ -40,7 +43,9 @@ const ListaUsuarios = () => {
                   <button onClick={() => dispatch(seleccionar(el))}>
                     Actualizar
                   </button>
-                  <button onClick={() => {}}>Eliminar</button>
+                  <button onClick={() => dispatch(eliminarUsuarios(el.id))}>
+                    Eliminar
+                  </button>
                 </td>
               </tr>
             ))}

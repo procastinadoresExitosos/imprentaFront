@@ -8,25 +8,38 @@ import { NotFoundError } from "./components/errores/NotFoundError";
 import FormUsuarios from "./components/usuarios/formUsuarios/FormUsuarios";
 import { Dashboard } from "./pages/dashboard/Dashboard";
 import { ModuloUsuraios } from "./pages/dashboard/ModuloUsuraios";
+import { useSelector } from "react-redux";
 
 function App() {
+  const loader = useSelector((state) => state.loader);
   return (
-    <BrowserRouter>
-      <div className="App">
-        <BarraNavegacion />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/registrar" element={<FormUsuarios />} />
-          <Route element={<RutasProtegidas />}>
-            <Route path="dashboard" element={<Dashboard />}>
-              <Route path="usuarios" element={<ModuloUsuraios />} />
+    <>
+      {loader && (
+        <div className="overlay">
+          <div className="loadingio-eclipse">
+            <div class="ldio-rpinwye8j0b">
+              <div></div>
+            </div>
+          </div>
+        </div>
+      )}
+      <BrowserRouter>
+        <div className="App">
+          <BarraNavegacion />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/registrar" element={<FormUsuarios />} />
+            <Route element={<RutasProtegidas />}>
+              <Route path="dashboard" element={<Dashboard />}>
+                <Route path="usuarios" element={<ModuloUsuraios />} />
+              </Route>
             </Route>
-          </Route>
-          <Route path="*" element={<NotFoundError />} />
-        </Routes>
-      </div>
-    </BrowserRouter>
+            <Route path="*" element={<NotFoundError />} />
+          </Routes>
+        </div>
+      </BrowserRouter>
+    </>
   );
 }
 

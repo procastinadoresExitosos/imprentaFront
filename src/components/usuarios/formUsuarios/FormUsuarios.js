@@ -7,6 +7,7 @@ import {
 } from "../../../store/slices/usuarios.slices";
 import { getRoles } from "../../../store/slices/roles.slices";
 import { seleccionar } from "../../../store/slices/selecActualizar.slice";
+import { useNavigate } from "react-router-dom";
 const FormUsuarios = () => {
   const {
     handleSubmit,
@@ -23,6 +24,7 @@ const FormUsuarios = () => {
   const usuarioEnSesion = useSelector((state) => state.usuarioEnSesion);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     console.log(elementoSeleccionado);
@@ -35,14 +37,22 @@ const FormUsuarios = () => {
   const enviar = (data) => {
     if (elementoSeleccionado) {
       data.id = elementoSeleccionado.id;
-      dispatch(actualizarUsuarios(data));
+      dispatch(actualizarUsuarios(data)).then(() => {
+        cancelar();
+      });
     } else {
-      dispatch(crearUsuarios(data));
+      dispatch(crearUsuarios(data)).then(() => {
+        if (!usuarioEnSesion) {
+          navigate("/login");
+        } else {
+          reset();
+        }
+      });
     }
   };
 
   const cancelar = () => {
-    reset(null);
+    reset();
     dispatch(seleccionar(null));
   };
 
