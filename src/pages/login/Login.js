@@ -20,6 +20,7 @@ const Login = () => {
     <>
       <h3>Bienvenido</h3>
       <form onSubmit={handleSubmit(ingresar)}>
+        <label htmlFor="usuario">Usuario</label>
         <div>
           <input
             type="text"
@@ -29,6 +30,7 @@ const Login = () => {
           />
         </div>
         <div>
+          <label htmlFor="contrasena">Contraseña</label>
           <input
             type="password"
             name="contrasena"

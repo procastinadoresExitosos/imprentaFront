@@ -42,10 +42,16 @@ export const crearUsuarios = (data) => (dispatch) => {
     .finally();
 };
 
-export const updateUsuarios = (data) => (dispatch) => {
-  return axios.patch(`${baseUrl}/:id`, data, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
+export const actualizarUsuarios = (data) => (dispatch) => {
+  return axios
+    .patch(`${baseUrl}/${data.id}`, data, getToken(token))
+    .then(() => getUsuarios());
+};
+
+export const eliminarUsuarios = (id) => (dispatch) => {
+  return axios
+    .delete(`${baseUrl}/${id}`, getToken(token))
+    .then(() => getUsuarios());
 };
 
 export default usersSlice.reducer;

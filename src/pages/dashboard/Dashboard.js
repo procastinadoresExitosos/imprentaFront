@@ -1,10 +1,19 @@
 import React from "react";
-import { Outlet } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 
 export const Dashboard = () => {
   return (
     <>
-      <div>Dashboard</div>
+      <aside>
+        <input type="checkbox" id="menu" />
+        <label htmlFor="menu">Menu</label>
+
+        <ul>
+          <li>
+            <Link to="/dashboard/usuarios">Usuarios</Link>
+          </li>
+        </ul>
+      </aside>
 
       <Outlet />
     </>
