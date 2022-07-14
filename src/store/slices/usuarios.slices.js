@@ -65,6 +65,22 @@ export const actualizarUsuarios = (data) => (dispatch) => {
     });
 };
 
+export const actualizarRolUsuarios = (data) => (dispatch) => {
+  dispatch(setLoader(true));
+  console.log(data);
+  return axios
+    .patch(`${baseUrl}/rol/${data.id}`, data, getToken(token))
+    .then(() => {
+      alert("usuario Actualizado");
+      dispatch(getUsuarios());
+    })
+    .finally(() => dispatch(setLoader(false)))
+    .catch((err) => {
+      const error = { status: err.response.status, error: err.response.data };
+      dispatch(setError(error));
+    });
+};
+
 export const eliminarUsuarios = (id) => (dispatch) => {
   dispatch(setLoader(true));
   return axios

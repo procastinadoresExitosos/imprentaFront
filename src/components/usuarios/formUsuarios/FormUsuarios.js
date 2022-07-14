@@ -2,12 +2,13 @@ import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import {
-  actualizarUsuarios,
+  actualizarRolUsuarios,
   crearUsuarios,
 } from "../../../store/slices/usuarios.slices";
 import { getRoles } from "../../../store/slices/roles.slices";
 import { seleccionar } from "../../../store/slices/selecActualizar.slice";
 import { useNavigate } from "react-router-dom";
+import { setError } from "../../../store/slices/errores.slice";
 const FormUsuarios = () => {
   const {
     handleSubmit,
@@ -36,9 +37,8 @@ const FormUsuarios = () => {
   const enviar = (data) => {
     if (elementoSeleccionado) {
       data.id = elementoSeleccionado.id;
-      dispatch(actualizarUsuarios(data)).then(() => {
-        cancelar();
-      });
+      dispatch(actualizarRolUsuarios(data));
+      cancelar();
     } else {
       dispatch(crearUsuarios(data)).then(() => {
         if (!usuarioEnSesion) {
@@ -53,6 +53,7 @@ const FormUsuarios = () => {
   const cancelar = () => {
     reset();
     dispatch(seleccionar(null));
+    dispatch(setError(null));
   };
 
   return (
@@ -63,24 +64,25 @@ const FormUsuarios = () => {
         </h3>
         <form onSubmit={handleSubmit(enviar)}>
           {elementoSeleccionado ? (
-            <div className="mb-3 form-floating">
-              <input
-                type="tel"
-                className={`form-control ${errors.telefono && "is-invalid"}`}
-                id="telefono"
-                placeholder="Teléfono"
-                maxLength={9}
-                {...register("telefono", {
-                  required: "Este campo es obligatorio",
-                  pattern: {
-                    value: /9[0-9]{8}/,
-                    message: "Ingrese un telefono válido",
-                  },
-                })}
-              />
-              <label htmlFor="telefono">Teléfono</label>
-              {errors.telefono && (
-                <div className="link-danger">{errors.telefono.message}</div>
+            <div className="form-floating">
+              {usuarioEnSesion && (
+                <>
+                  <select
+                    className="form-select"
+                    id="rol"
+                    {...register("rolId")}
+                  >
+                    <option value={null} disabled>
+                      Seleccionar
+                    </option>
+                    {roles.map((el) => (
+                      <option key={el.id} value={el.id}>
+                        {el.nombre}
+                      </option>
+                    ))}
+                  </select>
+                  <label htmlFor="rol">Roles</label>
+                </>
               )}
             </div>
           ) : (
@@ -236,11 +238,18 @@ const FormUsuarios = () => {
               </div>
             </>
           )}
-          <button className="mt-3 btn btn-primary">Registrar</button>
+          <div>
+            <button className="mt-3 btn btn-primary">Registrar</button>
 
-          {elementoSeleccionado && (
-            <button onClick={() => cancelar()}>Cancelar</button>
-          )}
+            {elementoSeleccionado && (
+              <button
+                className="mt-3 btn btn-danger"
+                onClick={() => cancelar()}
+              >
+                Cancelar
+              </button>
+            )}
+          </div>
         </form>
         {errores && <div className="link-danger">{errores.error.message}</div>}
       </div>

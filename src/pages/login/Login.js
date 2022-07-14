@@ -1,18 +1,17 @@
 import { useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../store/slices/usuarioEnSesion.slice";
 import "./login.css";
+import { setError } from "../../store/slices/errores.slice";
 
 const Login = () => {
   const { handleSubmit, register } = useForm();
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const errores = useSelector((state) => state.errores);
   console.log(errores);
   const ingresar = (data) => {
     dispatch(login(data));
-    errores && navigate("/");
   };
 
   return (
@@ -46,12 +45,20 @@ const Login = () => {
           </div>
           <div className="mt-4">
             <button className="btn btn-outline-success">Login</button>
-            <Link className="btn btn-outline-light" to="/registrar">
-              Registrate
+            <Link
+              onClick={() => {
+                dispatch(setError(null));
+              }}
+              className="btn btn-outline-light"
+              to="/registrar"
+            >
+              Regístrate
             </Link>
           </div>
         </form>
-        {errores && <div className="link-danger">{errores.error.message}</div>}
+        {errores && (
+          <div className="link-danger mt-3">{errores.error.message}</div>
+        )}
       </div>
     </>
   );

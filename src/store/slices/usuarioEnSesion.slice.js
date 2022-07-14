@@ -27,14 +27,13 @@ export const login = (data) => (dispatch) => {
       data
     )
     .then((res) => {
-      console.log(res);
       window.localStorage.setItem("usuario", JSON.stringify(res.data));
       dispatch(sessionUser(res.data));
+      dispatch(setError(null));
     })
     .finally(() => dispatch(setLoader(false)))
     .catch((err) => {
       const error = { status: err.response.status, error: err.response.data };
-      alert("credenciales incorrectas");
       dispatch(setError(error));
     });
 };
