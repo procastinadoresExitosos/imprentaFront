@@ -59,6 +59,7 @@ const FormUsuarios = () => {
   return (
     <>
       <div>
+        <h3 class="mb-4">Nuevo Usuario <i class="bi bi-person-circle"></i></h3>
         <form onSubmit={handleSubmit(enviar)}>
           {elementoSeleccionado ? (
             <div>
@@ -79,54 +80,66 @@ const FormUsuarios = () => {
             </div>
           ) : (
             <>
-              <div>
-                <label htmlFor="nombre">Nombre</label> <br />
+              {/* Nombres */}
+              <div class="form-floating mb-3">
                 <input
                   type="text"
-                  id="nombre"
-                  placeholder="Nombre"
+                  class = {`form-control ${errors.nombre&&"is-invalid"}`}
+                  id="floatingInput"
+                  placeholder="Nombres"
                   {...register("nombre", {
                     required: "Este campo es obligatorio",
                   })}
                 />
-                {errors.nombre && <p>{errors.nombre.message}</p>}
+                <label for="floatingInput">Nombres</label> 
+                {errors.nombre && <div class="link-danger">{errors.nombre.message}</div>}
               </div>
-              <div>
-                <label htmlFor="apellido">Apellido</label> <br />
-                <input
+
+              {/* Apellidos */}
+              <div class="form-floating mb-3">
+                <input  
                   type="text"
-                  id="apellido"
-                  placeholder="Apellido"
+                  class = {`form-control ${errors.apellido&&"is-invalid"}`}
+                  id="floatingInput"
+                  placeholder="Apellidos"
                   {...register("apellido", {
                     required: "Este campo es obligatorio",
                   })}
                 />
-                {errors.apellido && <p>{errors.apellido?.message}</p>}
+                <label for="floatingInput">Apellidos</label> 
+                {errors.apellido && <div class="link-danger">{errors.apellido?.message}</div>}
               </div>
-              <div>
-                <label htmlFor="telefono">Telefono</label> <br />
+
+              {/* Teléfono */}
+              <div class="form-floating mb-3">
                 <input
                   type="tel"
+                  class = {`form-control ${errors.telefono&&"is-invalid"}`}
                   id="telefono"
-                  placeholder="Telefono"
+                  placeholder="Teléfono"
+                  maxLength={9}
                   {...register("telefono", {
-                    required: "este campo es obligatorio",
+                    required: "Este campo es obligatorio",
                     pattern: {
                       value: /9[0-9]{8}/,
                       message: "Ingrese un telefono válido",
                     },
                   })}
                 />
-                {errors.telefono && <p>{errors.telefono.message}</p>}
+                <label for="telefono">Teléfono</label> 
+                {errors.telefono && <div class="link-danger">{errors.telefono.message}</div>}
               </div>
-              <div>
-                <label htmlFor="dni">Dni</label> <br />
+
+              {/* Dni */}
+              <div class="form-floating mb-3">
                 <input
                   type="text"
+                  class = {`form-control ${errors.dni&&"is-invalid"}`}
                   id="dni"
                   placeholder="Dni"
+                  maxLength={8}
                   {...register("dni", {
-                    required: "este campo es obligatorio",
+                    required: "Este campo es obligatorio",
                     pattern: {
                       value: /[0-9]{8}/,
                       message: "Ingrese un dni válido",
@@ -137,28 +150,34 @@ const FormUsuarios = () => {
                     },
                   })}
                 />
-                {errors.dni && <p>{errors.dni.message}</p>}
+                <label for="dni">Dni</label> 
+                {errors.dni && <div class="link-danger">{errors.dni.message}</div>}
               </div>
-              <div>
-                <label htmlFor="email">Email</label> <br />
+
+              {/* Email */}
+              <div class="form-floating mb-3">
                 <input
-                  type="text"
-                  id="email"
+                  type="text" 
+                  class = {`form-control ${errors.email&&"is-invalid"}`}
+                  id="email" 
                   placeholder="Email"
                   {...register("email", {
-                    required: "este campo es obligatorio",
+                    required: "Este campo es obligatorio",
                     pattern: {
                       value: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/,
                       message: "Ingrese un email correcto",
                     },
                   })}
                 />
-                {errors.email && <p>{errors.email.message}</p>}
+                <label for="email">Email</label> 
+                {errors.email && <div class="link-danger">{errors.email.message}</div>}
               </div>
-              <div>
-                <label htmlFor="contrasena">Contraseña</label> <br />
+
+              {/* Contraseña */}
+              <div class="form-floating mb-3">
                 <input
                   type="password"
+                  class = {`form-control ${errors.contrasena&&"is-invalid"}`}
                   id="contrasena"
                   placeholder="Contraseña"
                   {...register("contrasena", {
@@ -169,15 +188,17 @@ const FormUsuarios = () => {
                     },
                   })}
                 />
-                {errors.contrasena && <p>{errors.contrasena.message}</p>}
+                <label for="email">Contraseña</label> 
+                {errors.contrasena && <div class="link-danger">{errors.contrasena.message}</div>}
               </div>
-              <div>
+
+              {/* Rol */}
+              <div class="form-floating">
                 {usuarioEnSesion && (
                   <>
-                    <label htmlFor="rol">Rol</label> <br />
-                    <select id="rol" {...register("rolId")}>
-                      <option value="" disabled>
-                        Seleccione el rol
+                    <select class="form-select" id="rol" {...register("rolId")}>
+                      <option selected value={null} disabled>
+                        Seleccionar
                       </option>
                       {roles.map((el) => (
                         <option key={el.id} value={el.id}>
@@ -185,18 +206,20 @@ const FormUsuarios = () => {
                         </option>
                       ))}
                     </select>
+                    <label for="rol">Roles</label>
                   </>
                 )}
               </div>
             </>
           )}
-          <button>Registrar</button>
+
+          <button class="btn btn-primary mt-3">Registrar</button>
 
           {elementoSeleccionado && (
             <button onClick={() => cancelar()}>Cancelar</button>
           )}
         </form>
-        {errores && <p>{errores.error.message}</p>}
+        {errores && <div class="link-danger">{errores.error.message}</div>}
       </div>
     </>
   );

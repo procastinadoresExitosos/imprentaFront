@@ -19,7 +19,7 @@ const Login = () => {
   return (
     <>
       <h3>Bienvenido</h3>
-      <form onSubmit={handleSubmit(ingresar)}>
+      <form onSubmit={handleSubmit(ingresar)} className="bg-black md:flex">
         <label htmlFor="usuario">Usuario</label>
         <div>
           <input

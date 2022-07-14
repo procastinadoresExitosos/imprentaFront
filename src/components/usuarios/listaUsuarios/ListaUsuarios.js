@@ -16,11 +16,14 @@ const ListaUsuarios = () => {
   }, [dispatch]);
 
   return (
-    <>
+    <div>
+      <h3 class="mb-4 mt-5">
+        Listado de usuarios <i class="bi bi-people-fill"></i>
+      </h3>
       {usuarios.length === 0 ? (
         <h2>No hay usuarios registrados</h2>
       ) : (
-        <table>
+        <table class="table table-striped table-hover">
           <thead>
             <tr>
               <th>Nombre</th>
@@ -40,11 +43,18 @@ const ListaUsuarios = () => {
                 <td>{el.rol.nombre}</td>
                 <td>{el.estado}</td>
                 <td>
-                  <button onClick={() => dispatch(seleccionar(el))}>
-                    Actualizar
+                  <button
+                    class="btn btn-outline-info"
+                    onClick={() => dispatch(seleccionar(el))}
+                  >
+                    <i class="bi bi-pencil-square"></i>
                   </button>
-                  <button onClick={() => dispatch(eliminarUsuarios(el.id))}>
-                    Eliminar
+                  &nbsp;&nbsp;
+                  <button
+                    class="btn btn-outline-danger"
+                    onClick={() => dispatch(eliminarUsuarios(el.id))}
+                  >
+                    <i class="bi bi-trash-fill"></i>
                   </button>
                 </td>
               </tr>
@@ -52,7 +62,7 @@ const ListaUsuarios = () => {
           </tbody>
         </table>
       )}
-    </>
+    </div>
   );
 };
 
