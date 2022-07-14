@@ -13,11 +13,13 @@ const ListaUsuarios = () => {
   }, [dispatch]);
 
   return (
-    <>
+    <div class="container-sm mt-5">
+      <h3>Listado de usuarios</h3>
       {usuarios.length === 0 ? (
         <h2>No hay usuarios registrados</h2>
       ) : (
-        <table>
+
+        <table class="table table-striped table-hover">
           <thead>
             <tr>
               <th>Nombre</th>
@@ -37,17 +39,20 @@ const ListaUsuarios = () => {
                 <td>{el.rol.nombre}</td>
                 <td>{el.estado}</td>
                 <td>
-                  <button onClick={() => dispatch(seleccionar(el))}>
-                    Actualizar
+                  <button class="btn btn-outline-info" onClick={() => dispatch(seleccionar(el))}>
+                  <i class="bi bi-pencil-square"></i>
                   </button>
-                  <button onClick={() => {}}>Eliminar</button>
+                  &nbsp;&nbsp;
+                  <button class="btn btn-outline-danger" onClick={() => {}}>
+                    <i class="bi bi-trash-fill"></i>
+                  </button>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
       )}
-    </>
+    </div>
   );
 };
 
