@@ -13,8 +13,8 @@ const ListaUsuarios = () => {
   }, [dispatch]);
 
   return (
-    <div class="container-sm mt-5">
-      <h3>Listado de usuarios</h3>
+    <div >
+      <h3 class="mb-4 mt-5">Listado de usuarios <i class="bi bi-people-fill"></i></h3>
       {usuarios.length === 0 ? (
         <h2>No hay usuarios registrados</h2>
       ) : (
